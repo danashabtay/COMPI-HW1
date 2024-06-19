@@ -20,6 +20,21 @@ void handleString()
 
 }
 
+void handleInvalidEscapeSeq()
+{
+
+}
+
+void handleInvalidHex()
+{
+
+}
+
+void handleUnclosedString()
+{
+
+}
+
 void handleToken(int token)
 {
     switch (token)
@@ -103,6 +118,15 @@ void handleToken(int token)
         cout << yylineno << " COMMENT //" << endl;
         break;
     case STRING:
+        handleString();
+        break;
+    case UNCLOSED_STRING:
+        handleUnclosedString();
+        break;
+    case INVALID_HEX:
+        handleInvalidHex();
+        break;
+    case INVALID_ESCAPE_SEQUENCE:
         handleString();
         break;
     case -1:
