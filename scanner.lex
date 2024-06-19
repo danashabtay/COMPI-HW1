@@ -6,6 +6,9 @@
 
 %option yylineno
 %option noyywrap
+string           ([ !#-\[\]-~	])
+escape           ([\\ntr\"0])
+hex              (x[0-7][0-9A-Fa-f])
 
 %%
 
@@ -36,10 +39,10 @@ continue                                                                        
 ([a-zA-Z][a-zA-Z0-9]*)                                                              return ID;
 0|([1-9][0-9]*)                                                                     return NUM;
 [ \t\r\n]+                                                                          ;
-\"([ !#-\[\]-~	]|\\[\\ntr\"0]|\\x[0-7][0-9A-Fa-f])*\"                              return STRING;
-\"([ !#-\[\]-~	]|\\[\\ntr\"0]|\\x[0-7][0-9A-Fa-f])*                                return UNCLOSED_STRING;
-    return INVALID_ESCAPE_SEQUENCE;
-    return INVALID_HEX;
+\"({string}|\\{escape}|\\{hex})*\"                                                   return STRING;
+\"({string}|\\{escape}|\\{hex})*                                                    return UNCLOSED_STRING;
+\"({string}|\\{escape}|\\{hex})*\\[^\\ntr\"0]                                       return INVALID_ESCAPE_SEQUENCE;
+\"({string}|\\{escape}|\\{hex})*\\x([^0-7][0-9A-Fa-f]|[0-7][^0-9A-Fa-f]|[^0-7][^0-9A-Fa-f]|[^0-9A-Fa-f])    return INVALID_HEX;
 ([0]+[0-9]*)|0												                        return -1;
 .                                                                                   return -1;
 
