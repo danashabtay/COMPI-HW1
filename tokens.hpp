@@ -33,8 +33,9 @@ enum tokentype
 	ID = 26,
 	NUM = 27,
 	STRING = 28,
-	UNCLOSED_STRING = 29
-
+	UNCLOSED_STRING = 29,
+	INVALID_ESCAPE_SEQUENCE = 30,
+	INVALID_HEX = 31
 };
 
 //std::unordered_map<int, std::string> my_map = std::unordered_map<int, std::string>();

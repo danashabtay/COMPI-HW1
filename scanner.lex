@@ -35,7 +35,13 @@ continue                                                                        
 (\/\/[^\r\n\n\r]*)                                                                  return COMMENT;
 ([a-zA-Z][a-zA-Z0-9]*)                                                              return ID;
 0|([1-9][0-9]*)                                                                     return NUM;
-[ \t\r\n]+                                                                          ;
+[ \t\r\n]+ 
+    return STRING;
+    return UNCLOSED_STRING;
+    return INVALID_ESCAPE_SEQUENCE;
+    return INVALID_HEX;
+([\t\n\r ])                                                                         ;
+([0]+[0-9]*)|0												                        return -1;
 .                                                                                   return -1;
 
  
